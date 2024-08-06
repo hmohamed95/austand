@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('contact_person')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('contact_email')->nullable();
+            $table->string('type');
 
-            $table->foreignIdFor(\App\Models\College::class)->constrained();
+            $table->foreignIdFor(\App\Models\College::class)->nullable()->constrained();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
 
             $table->timestamps();

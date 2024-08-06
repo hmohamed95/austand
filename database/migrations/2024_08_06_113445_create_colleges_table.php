@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('contact_email')->nullable();
 
             $table->foreignIdFor(\App\Models\User::class)->constrained();
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

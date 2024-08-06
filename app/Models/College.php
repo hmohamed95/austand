@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,6 +24,15 @@ class College extends Model
     public function visitors(): HasManyThrough
     {
         return $this->hasManyThrough(Visitor::class, Program::class);
+    }
+
+
+
+
+    public function scopeSearch(Builder $query, $search): Builder
+    {
+        return $query->where('name', 'like', '%' . $search . '%')
+                     ->orWhere('short_name', 'like', '%' . $search . '%');
     }
 
 }

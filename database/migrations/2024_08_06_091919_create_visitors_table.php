@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Event::class)->constrained();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }
