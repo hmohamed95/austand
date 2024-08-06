@@ -12,6 +12,8 @@ class Event extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['title', 'description', 'start_date', 'end_date', 'user_id'];
+
 
 
     public function visitors(): HasMany

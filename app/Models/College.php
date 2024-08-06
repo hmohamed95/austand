@@ -12,6 +12,8 @@ class College extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['name', 'short_name', 'contact_person', 'contact_number', 'contact_email', 'user_id'];
+
 
     public function programs(): HasMany
     {

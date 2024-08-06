@@ -12,6 +12,9 @@ class Visitor extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['name', 'email', 'phone', 'enrolled', 'called', 'remark', 'event_id', 'user_id'];
+
+
 
     public function event(): BelongsTo
     {
@@ -21,6 +24,11 @@ class Visitor extends Model
     public function programs(): BelongsToMany
     {
         return $this->belongsToMany(Program::class);
+    }
+
+    public function User(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
 }
