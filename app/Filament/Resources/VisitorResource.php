@@ -43,13 +43,14 @@ class VisitorResource extends Resource
                     ->label('Visitor Information')
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                        ->required(),
+                        ->required()
+                        ->autocomplete(false),
                     Forms\Components\TextInput::make('email')
                         ->email()
-                        ->required(),
+                        ->autocomplete(false),
                     Forms\Components\TextInput::make('phone')
                         ->tel()
-                        ->required(),
+                        ->autocomplete(false)
                     ])->columns(3),
 
 
@@ -69,6 +70,7 @@ class VisitorResource extends Resource
 
                         //CheckBox list filtered
                         Forms\Components\CheckboxList::make('programs')
+                        ->relationship('programs', 'name')
                         ->label('Programs')
                         ->options(function (callable $get) {
 
@@ -188,6 +190,7 @@ class VisitorResource extends Resource
     {
         return \App\Models\Program::forCollege($college_id)->get();
     }
+
 
 
 

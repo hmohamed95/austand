@@ -8,17 +8,19 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
-class OrderShipped extends Mailable
+class VisitorRegistered extends Mailable
 {
     use Queueable, SerializesModels;
+    public $fullName;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($fullName)
     {
-        //
+        $this->fullName = $fullName;
     }
 
     /**
@@ -27,7 +29,11 @@ class OrderShipped extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Shipped',
+            subject: 'Welcome to Ahlia University',
+            from: new Address(config('mail.from.address'), config('mail.from.name')),
+
+
+
         );
     }
 
@@ -50,4 +56,7 @@ class OrderShipped extends Mailable
     {
         return [];
     }
+
+
+
 }

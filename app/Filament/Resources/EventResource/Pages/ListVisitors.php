@@ -4,6 +4,7 @@ namespace App\Filament\Resources\EventResource\Pages;
 
 use App\Filament\Resources\EventResource;
 use App\Filament\Resources\VisitorResource;
+use App\Models\Event;
 use Filament\Tables\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Columns\IconColumn;
@@ -11,28 +12,29 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HtmlString;
+use Filament\Tables\Columns\Summarizers\Count;
+use Illuminate\Database\Query\Builder;
 
 class ListVisitors extends ListRecords
 {
     protected static string $resource = VisitorResource::class;
+
+    public Event $record;
 
 
     //getTitle function for dynamic title to view event title
     public function getTitle(): string | Htmlable
     {
         //get {record} from the url
-        $eventId = request('record');
-
-
-        $event = \App\Models\Event::find($eventId);
-        return $event->title;
+        return $this->record->title;
     }
 
 
     public function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn ($query) => $query->where('event_id', request('record')))
+            ->modifyQueryUsing(fn ($query) => $query->where('event_id', $this->record->id))
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
@@ -66,6 +68,10 @@ class ListVisitors extends ListRecords
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
+                TextColumn::make('count')
+                    ->label('')
+                    ->summarize(Count::make()->query(fn (Builder $query) => $query))
+
             ])->filters([
                 //called, added by, program
 
@@ -84,5 +90,7 @@ class ListVisitors extends ListRecords
 
 
     }
+
+
 
 }

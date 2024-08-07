@@ -19,41 +19,22 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
         }
         .footer {
             font-size: 0.8em;
             color: #666;
             text-align: center;
-            margin-top: 60px;
-        }
-
-        a{
-            color: #007bff;
-            text-decoration: none;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <p>Dear {{$full_name}}</p>
-        <p>Thank you for visiting Ahlia University stand</p>
-
-        <p>You can find more details about our programs in our <a href="https://www.ahlia.edu.bh/">Website</a></p>
-
-        <!-- Telephone -->
-
-        <p>For more information, please contact us on +973 17298563</p>
-
+        <p>Thank you for your message. We will get back to you as soon as possible.</p>
     </div>
     <div class="footer">
-
-
-        <img src="https://www.ahlia.edu.bh/AU_Logo.png" alt="Ahlia Logo" width="150px">
-
         <p>Best regards,</p>
-        <p>Ahlia University - {{now()->year}}</p>
-        <p>+973 17298563</p>
+        <p>Your Company Name</p>
     </div>
 </body>
 </html>
