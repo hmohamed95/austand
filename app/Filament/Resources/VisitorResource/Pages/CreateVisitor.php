@@ -73,7 +73,8 @@ class CreateVisitor extends CreateRecord
         if (filter_var($visitor->email, FILTER_VALIDATE_EMAIL))
         {
             $fullName = $visitor->name;
-            SendEmail::dispatch($visitor->email, $visitor->name);
+
+            SendEmail::dispatch($visitor->email, $fullName);
         }
     }
 }

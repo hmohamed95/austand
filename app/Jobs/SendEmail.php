@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SendEmail implements ShouldQueue
@@ -22,8 +23,10 @@ class SendEmail implements ShouldQueue
      */
     public function __construct(string $receiver, string $full_name)
     {
+
         $this->receiver = $receiver;
         $this->full_name = $full_name;
+
     }
 
     /**
@@ -31,9 +34,7 @@ class SendEmail implements ShouldQueue
      */
     public function handle(): void
     {
-
-
-
+        Log::info('Sending email to ' . $this->receiver);
         Mail::to($this->receiver)->send(new VisitorRegistered($this->full_name));
     }
 }

@@ -20,7 +20,10 @@ class VisitorRegistered extends Mailable
      */
     public function __construct($fullName)
     {
+
         $this->fullName = $fullName;
+
+
     }
 
     /**
@@ -44,6 +47,7 @@ class VisitorRegistered extends Mailable
     {
         return new Content(
             view: 'view.name',
+            with: ['full_name' => $this->fullName]
         );
     }
 

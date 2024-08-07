@@ -91,9 +91,9 @@ class EventResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ])->recordUrl(
                 fn (Model $record): string => route('filament.austand.resources.events.view', ['record' => $record]),
             );
