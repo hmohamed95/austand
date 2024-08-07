@@ -21,13 +21,15 @@ class College extends Model
         return $this->hasMany(Program::class);
     }
 
-    public function visitors(): HasManyThrough
+    public function visitors(): Visitor
     {
-        return $this->hasManyThrough(Visitor::class, Program::class);
+        return Visitor::whereIn('id', function (Builder $query) {
+            $query->select('visitor_id')
+                  ->from('program_visitor')
+                  ->join('programs', 'programs.id', '=', 'program_visitor.program_id')
+                  ->whereIn('programs.id', $this->programs->pluck('id'));
+        });
     }
-
-
-
 
     public function scopeSearch(Builder $query, $search): Builder
     {

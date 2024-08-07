@@ -37,9 +37,11 @@ class Visitor extends Model
         return $query->where('called', $called);
     }
 
-    public function scopeForEvent(Builder $query, $event_id): Builder
+    public function scopeForEvent(Builder $query, int $event_id): Builder
     {
         return $query->where('event_id', $event_id);
     }
+
+
 
 }
