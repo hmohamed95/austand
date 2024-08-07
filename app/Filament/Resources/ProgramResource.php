@@ -17,7 +17,13 @@ class ProgramResource extends Resource
 {
     protected static ?string $model = Program::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+
+        //menu group
+        protected static ?string $navigationGroup = 'Resources';
+
+        //order of menu
+        protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -48,17 +54,19 @@ class ProgramResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('short_name')
                     ->searchable(),
+
+
+                Tables\Columns\TextColumn::make('college.name')
+                    ->numeric()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('contact_person')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact_number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact_email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('college.name')
-                    ->numeric()
-                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),

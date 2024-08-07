@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,6 +30,16 @@ class Visitor extends Model
     public function User(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeCalled(Builder $query, $called): Builder
+    {
+        return $query->where('called', $called);
+    }
+
+    public function scopeForEvent(Builder $query, $event_id): Builder
+    {
+        return $query->where('event_id', $event_id);
     }
 
 }

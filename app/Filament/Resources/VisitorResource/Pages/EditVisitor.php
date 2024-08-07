@@ -16,4 +16,22 @@ class EditVisitor extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+
+    protected function getRedirectUrl(): ?string
+    {
+
+        $event = $this->record->event;
+        if($event){
+           $url = route('filament.austand.resources.events.view', ['record' => $event->id]);
+
+              return $url;
+        }
+
+
+        return $this->getResource()::getUrl('index');
+    }
+
+
+
 }

@@ -11,13 +11,15 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class EventResource extends Resource
 {
     protected static ?string $model = Event::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
     public static function form(Form $form): Form
     {
@@ -28,8 +30,16 @@ class EventResource extends Resource
 
                 Forms\Components\Textarea::make('description'),
 
-                Forms\Components\DateTimePicker::make('start_date'),
-                Forms\Components\DateTimePicker::make('end_date'),
+                Forms\Components\DateTimePicker::make('start_date')
+                ->native(false)
+                ->displayFormat('d-m-Y: H:i')
+                ->closeOnDateSelection()
+                ->before('end_date'),
+                Forms\Components\DateTimePicker::make('end_date')
+                ->native(false)
+                ->closeOnDateSelection()
+                ->displayFormat('d-m-Y: H:i')
+                ->after('start_date'),
 
             ]);
     }
@@ -41,14 +51,26 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('start_date')
-                    ->dateTime()
+                    ->dateTime('d-F-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
-                    ->dateTime()
+                    ->dateTime('d-F-Y')
+
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+
+                    Tables\Columns\TextColumn::make('visitors_count')
+                    ->label('Visitors')
+                    ->sortable()
+                    ->badge()->color('primary')
+                    ->getStateUsing(function ($record) {
+                        return $record->visitors()->count();
+                    })->alignCenter(),
+
+
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Created By')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -61,7 +83,7 @@ class EventResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->recordUrl(fn ($record) => $record->route('view'))
             ->filters([
                 //
             ])
@@ -72,7 +94,9 @@ class EventResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])->recordUrl(
+                fn (Model $record): string => route('filament.austand.resources.events.view', ['record' => $record]),
+            );
     }
 
     public static function getRelations(): array
@@ -87,6 +111,7 @@ class EventResource extends Resource
         return [
             'index' => Pages\ListEvents::route('/'),
             'create' => Pages\CreateEvent::route('/create'),
+            'view' => Pages\ListVisitors::route('/{record}'),
             'edit' => Pages\EditEvent::route('/{record}/edit'),
         ];
     }

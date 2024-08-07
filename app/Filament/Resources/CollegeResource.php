@@ -17,7 +17,16 @@ class CollegeResource extends Resource
 {
     protected static ?string $model = College::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+
+
+    //menu group
+    protected static ?string $navigationGroup = 'Resources';
+
+    //order of menu
+    protected static ?int $navigationSort = 1;
+
+    //
 
     public static function form(Form $form): Form
     {

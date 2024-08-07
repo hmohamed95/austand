@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,6 +29,16 @@ class Program extends Model
     public function visitors(): BelongsToMany
     {
         return $this->belongsToMany(Visitor::class);
+    }
+
+    public function scopeForCollege(Builder $query, $collegeId): Builder
+    {
+       //if null, return all programs
+        if ($collegeId === null) {
+            return $query;
+        }
+
+        return $query->where('college_id', $collegeId);
     }
 
 
