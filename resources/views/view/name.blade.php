@@ -39,21 +39,21 @@
         <p>Dear {{$full_name}}</p>
         <p>Thank you for visiting Ahlia University stand</p>
 
-        <p>You can find more details about our programs in our <a href="https://www.ahlia.edu.bh/">Website</a></p>
+        <p>You can find more details about our programs in our <a href="https://www.ahlia.edu.bh/programmes/">Website</a></p>
 
         <!-- Telephone -->
 
-        <p>For more information, please contact us on +973 17298563</p>
+        <p>For more information, please contact us on +973 17298550</p>
 
     </div>
     <div class="footer">
 
 
-        <img src="https://www.ahlia.edu.bh/AU_Logo.png" alt="Ahlia Logo" width="150px">
+        <img src="https://www.ahlia.edu.bh/AU_Logo.svg" alt="Ahlia Logo" width="150px">
 
         <p>Best regards,</p>
         <p>Ahlia University - {{now()->year}}</p>
-        <p>+973 17298563</p>
+        <p>+973 17298550</p>
     </div>
 </body>
 </html>
