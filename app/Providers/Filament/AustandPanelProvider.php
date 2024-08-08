@@ -25,7 +25,7 @@ class AustandPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('austand')
-            ->path('austand')
+            ->path('')
             ->login()
             ->colors([
                 'primary' => Color::Red,
