@@ -49,7 +49,7 @@
     <div class="footer">
 
 
-        <img src="https://www.ahlia.edu.bh/AU_Logo.svg" alt="Ahlia Logo" width="150px">
+        <img src="https://www.ahlia.edu.bh/AU_Logo.png" alt="Ahlia Logo" width="150px">
 
         <p>Best regards,</p>
         <p>Ahlia University - {{now()->year}}</p>
