@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Resources\EventResource\RelationManagers;
+use App\Filament\Resources\EventResource\RelationManagers\VisitorsRelationManager;
 use App\Models\Event;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -31,15 +32,15 @@ class EventResource extends Resource
                 Forms\Components\Textarea::make('description'),
 
                 Forms\Components\DateTimePicker::make('start_date')
-                ->native(false)
-                ->displayFormat('d-m-Y: H:i')
-                ->closeOnDateSelection()
-                ->before('end_date'),
+                    ->native(false)
+                    ->displayFormat('d-m-Y: H:i')
+                    ->closeOnDateSelection()
+                    ->before('end_date'),
                 Forms\Components\DateTimePicker::make('end_date')
-                ->native(false)
-                ->closeOnDateSelection()
-                ->displayFormat('d-m-Y: H:i')
-                ->after('start_date'),
+                    ->native(false)
+                    ->closeOnDateSelection()
+                    ->displayFormat('d-m-Y: H:i')
+                    ->after('start_date'),
 
             ]);
     }
@@ -58,7 +59,7 @@ class EventResource extends Resource
 
                     ->sortable(),
 
-                    Tables\Columns\TextColumn::make('visitors_count')
+                Tables\Columns\TextColumn::make('visitors_count')
                     ->label('Visitors')
                     ->sortable()
                     ->badge()->color('primary')
@@ -83,7 +84,7 @@ class EventResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])->recordUrl(fn ($record) => $record->route('view'))
+            ])->recordUrl(fn($record) => $record->route('view'))
             ->filters([
                 //
             ])
@@ -95,14 +96,14 @@ class EventResource extends Resource
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
             ])->recordUrl(
-                fn (Model $record): string => route('filament.austand.resources.events.view', ['record' => $record]),
+                fn(Model $record): string => route('filament.austand.resources.events.view', ['record' => $record]),
             );
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            VisitorsRelationManager::class
         ];
     }
 
@@ -111,7 +112,7 @@ class EventResource extends Resource
         return [
             'index' => Pages\ListEvents::route('/'),
             'create' => Pages\CreateEvent::route('/create'),
-            'view' => Pages\ListVisitors::route('/{record}'),
+            'view' => Pages\ViewEvent::route('/{record}'),
             'edit' => Pages\EditEvent::route('/{record}/edit'),
         ];
     }
