@@ -48,6 +48,7 @@ class EventResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->latest())
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),

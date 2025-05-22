@@ -107,6 +107,7 @@ class VisitorResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->latest())
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
@@ -158,6 +159,7 @@ class VisitorResource extends Resource
                     ->query(fn($query) => $query->where('enrolled', true)),
 
             ])
+
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
