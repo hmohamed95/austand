@@ -22,10 +22,10 @@ class EditVisitor extends EditRecord
     {
 
         $event = $this->record->event;
-        if($event){
-           $url = route('filament.austand.resources.events.view', ['record' => $event->id]);
+        if ($event) {
+            $url = route('filament.austand.resources.events.view', ['record' => $event->id]);
 
-              return $url;
+            return $url;
         }
 
 
@@ -34,4 +34,17 @@ class EditVisitor extends EditRecord
 
 
 
+    public function getBreadcrumbs(): array
+    {
+        $event = $this->record->event;
+
+        return [
+            route('filament.austand.pages.dashboard') => 'Dashboard',
+            route('filament.austand.resources.events.index') => 'Events',
+            $event
+                ? route('filament.austand.resources.events.view', ['record' => $event->id])
+                : route('filament.austand.resources.events.index') => $event?->name ?? 'Event',
+            url()->current() => 'Edit Visitor',
+        ];
+    }
 }

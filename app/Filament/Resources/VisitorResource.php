@@ -22,6 +22,10 @@ class VisitorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static bool $shouldRegisterNavigation = false;
+
+
+
 
 
 
@@ -35,27 +39,27 @@ class VisitorResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('event_id')
-                ->visible(!$event?->exists)
-                ->relationship('event', 'title')
-                ->columnSpanFull(),
+                    ->visible(!$event?->exists)
+                    ->relationship('event', 'title')
+                    ->columnSpanFull(),
 
 
                 Grid::make('visitor_info')
                     ->label('Visitor Information')
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                        ->required()
-                        ->autocomplete(false),
-                    Forms\Components\TextInput::make('email')
-                        ->email()
-                        ->autocomplete(false),
-                    Forms\Components\TextInput::make('phone')
-                        ->tel()
-                        ->autocomplete(false)
+                            ->required()
+                            ->autocomplete(false),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->autocomplete(false),
+                        Forms\Components\TextInput::make('phone')
+                            ->tel()
+                            ->autocomplete(false)
                     ])->columns(3),
 
 
-                    //radio buttons for program type,
+                //radio buttons for program type,
 
 
                 //Program Grid
@@ -64,31 +68,29 @@ class VisitorResource extends Resource
                     ->label('Show Programs for college:')
                     ->schema([
                         Forms\Components\Select::make('college_filter')
-                        ->label('College')
-                        ->options(\App\Models\College::all()->pluck('name', 'id'))
-                        ->placeholder('All Colleges\'s Programs')
-                        ->reactive(),
+                            ->label('College')
+                            ->options(\App\Models\College::all()->pluck('name', 'id'))
+                            ->placeholder('All Colleges\'s Programs')
+                            ->reactive(),
 
                         //CheckBox list filtered
                         Forms\Components\CheckboxList::make('programs')
-                        ->relationship('programs', 'name')
-                        ->label('Programs')
-                        ->options(function (callable $get) {
+                            ->relationship('programs', 'name')
+                            ->label('Programs')
+                            ->options(function (callable $get) {
 
-                            $collegeFilter = $get('college_filter');
+                                $collegeFilter = $get('college_filter');
 
-                            if (!is_numeric($collegeFilter)) {
-                                return \App\Models\Program::all()->pluck('name', 'id');
-                            }
-                            else
-                            {
-                                return \App\Models\Program::forCollege($collegeFilter)->get()->pluck('name', 'id');
-                            }
-                        })
+                                if (!is_numeric($collegeFilter)) {
+                                    return \App\Models\Program::all()->pluck('name', 'id');
+                                } else {
+                                    return \App\Models\Program::forCollege($collegeFilter)->get()->pluck('name', 'id');
+                                }
+                            })
 
 
                     ])
-                    ->columns(['lg'=>2, 'md'=>1, 'sm'=>1]),
+                    ->columns(['lg' => 2, 'md' => 1, 'sm' => 1]),
 
 
                 Forms\Components\Textarea::make('remark')->columnSpanFull(),
@@ -149,11 +151,11 @@ class VisitorResource extends Resource
 
                 Filter::make('called')
                     ->label('Called')
-                    ->query(fn ($query) => $query->where('called', true)),
+                    ->query(fn($query) => $query->where('called', true)),
 
                 Filter::make('enrolled')
                     ->label('Enrolled')
-                    ->query(fn ($query) => $query->where('enrolled', true)),
+                    ->query(fn($query) => $query->where('enrolled', true)),
 
             ])
             ->actions([
@@ -164,7 +166,7 @@ class VisitorResource extends Resource
             //         Tables\Actions\DeleteBulkAction::make(),
             //     ]),
             // ]);
-            ;
+        ;
     }
 
     public static function getRelations(): array
@@ -192,9 +194,4 @@ class VisitorResource extends Resource
     {
         return \App\Models\Program::forCollege($college_id)->get();
     }
-
-
-
-
-
 }

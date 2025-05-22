@@ -9,6 +9,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use App\Jobs\SendEmail;
+use Illuminate\Support\Facades\Request;
 
 class CreateVisitor extends CreateRecord
 {
@@ -70,11 +71,28 @@ class CreateVisitor extends CreateRecord
     protected function afterCreate()
     {
         $visitor = $this->record;
-        if (filter_var($visitor->email, FILTER_VALIDATE_EMAIL))
-        {
+        if (filter_var($visitor->email, FILTER_VALIDATE_EMAIL)) {
             $fullName = $visitor->name;
 
             SendEmail::dispatch($visitor->email, $fullName);
         }
+    }
+
+
+
+
+    public function getBreadcrumbs(): array
+    {
+        $eventId = Request::query('event_id');
+        $event = $eventId ? Event::find($eventId) : null;
+
+        return [
+            route('filament.austand.pages.dashboard') => 'Dashboard',
+            route('filament.austand.resources.events.index') => 'Events',
+            $event
+                ? route('filament.austand.resources.events.view', ['record' => $event->id])
+                : route('filament.austand.resources.events.index') => $event?->name ?? 'Event',
+            url()->current() => 'Create Visitor',
+        ];
     }
 }

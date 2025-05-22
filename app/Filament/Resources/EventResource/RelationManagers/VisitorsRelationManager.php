@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\EventResource\RelationManagers;
 
+use App\Filament\Resources\VisitorResource\Pages\CreateVisitor;
+use App\Filament\Resources\VisitorResource\Pages\EditVisitor;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -29,7 +31,9 @@ class VisitorsRelationManager extends RelationManager
                 IconColumn::make('enrolled')->boolean(),
                 IconColumn::make('called')->boolean(),
                 TextColumn::make('remark')->wrap(),
+
             ])
+            ->recordUrl(fn($record) => EditVisitor::getUrl(['record' => $record->id]))
             ->filters([
                 //
             ])
@@ -41,9 +45,7 @@ class VisitorsRelationManager extends RelationManager
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\BulkActionGroup::make([]),
             ]);
     }
 }

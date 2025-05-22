@@ -13,6 +13,12 @@ class ViewEvent extends ViewRecord
     protected static string $resource = EventResource::class;
 
 
+    public function getTitle(): string
+    {
+        return $this->record->title ?? "View Event";
+    }
+
+
     public function form(Form $form): Form
     {
         return $form->schema([]);
