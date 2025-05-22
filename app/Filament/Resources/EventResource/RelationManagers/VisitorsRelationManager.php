@@ -38,7 +38,11 @@ class VisitorsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\Action::make('createVisitor')
+                    ->label('Create Visitor')
+                    ->icon('heroicon-o-plus')
+                    ->url(fn() => CreateVisitor::getUrl(['event' => $this->getOwnerRecord()->id]))
+                    ->color('primary'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
